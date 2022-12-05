@@ -1,5 +1,5 @@
 [msbuild]
-project = "test-api.sln"
+project = "../test-api.sln"
 [github]
 user = "diversiwarer"
 repo = "test-repo"
