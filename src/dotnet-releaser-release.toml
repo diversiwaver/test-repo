@@ -1,5 +1,6 @@
 [msbuild]
 project = "../test-api.sln"
+configuration = "Release"
 [github]
 user = "diversiwaver"
 repo = "test-repo"
@@ -8,18 +9,5 @@ enable = false
 [coverage]
 enable = false
 [nuget]
-publish = false
-
-[[pack]]
-rid = ["linux-x64", "linux-arm", "linux-arm64"]
-kinds = ["deb", "tar"]
-
-[[pack]]
-publish = false
-rid = ["rhel-x64"]
-kinds = ["rpm", "tar"]
-
-[[pack]]
-publish = false
-rid = ["osx-x64", "osx-arm64"]
-kinds = ["tar"]
+publish = true
+source = "https://nuget.pkg.github.com/diversiwaver/index.json"
