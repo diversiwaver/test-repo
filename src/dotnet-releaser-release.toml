@@ -16,3 +16,13 @@ source = "https://nuget.pkg.github.com/diversiwaver/index.json"
 title = "## Breaking Changes"
 labels = ["breaking-change", "category: breaking-change"]
 order = 10
+
+[[changelog.category]]
+title = "## New Features"
+labels = ["new-feature", "feature", "category: feature"]
+order = 20
+
+[[changelog.category]]
+title = "## Bug Fixes"
+labels = ["bugfix", "fix", "bug", "category: bug"]
+order = 30
