@@ -11,3 +11,8 @@ enable = false
 [nuget]
 publish = true
 source = "https://nuget.pkg.github.com/diversiwaver/index.json"
+
+[[changelog.category]]
+title = "## Breaking Changes"
+labels = ["breaking-change", "category: breaking-change"]
+order = 10
