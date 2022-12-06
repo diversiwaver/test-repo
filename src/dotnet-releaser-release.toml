@@ -11,3 +11,58 @@ enable = false
 [nuget]
 publish = true
 source = "https://nuget.pkg.github.com/diversiwaver/index.json"
+
+[[changelog.category]]
+title = "## Breaking Changes"
+labels = ["breaking-change", "category: breaking-change"]
+order = 10
+
+[[changelog.category]]
+title = "## New Features"
+labels = ["new-feature", "feature", "category: feature"]
+order = 20
+
+[[changelog.category]]
+title = "## Bug Fixes"
+labels = ["bugfix", "fix", "bug", "category: bug"]
+order = 30
+
+[[changelog.category]]
+title = "## Enhancements"
+labels = ["enhancement", "refactor", "performance", "category: performance", "category: enhancement"]
+order = 40
+
+[[changelog.category]]
+title = "## Maintenance"
+labels = ["maintenance", "ci", "category: ci"]
+order = 50
+
+[[changelog.category]]
+title = "## Tests"
+labels = ["tests", "test", "category: tests"]
+order = 60
+
+[[changelog.category]]
+title = "## Examples"
+labels = ["examples", "samples", "category: samples", "category: examples"]
+order = 70
+
+[[changelog.category]]
+title = "## Documentation"
+labels = ["documentation", "doc", "category: documentation", "category: doc"]
+order = 80
+
+[[changelog.category]]
+title = "## Accessibility"
+labels = ["translations", "accessibility", "category: accessibility"]
+order = 90
+
+[[changelog.category]]
+title = "## Dependencies"
+labels = ["dependencies", "deps", "category: dependencies"]
+order = 100
+
+[[changelog.category]]
+title = "## Misc"
+labels = ["misc", "category: misc"]
+order = 110
