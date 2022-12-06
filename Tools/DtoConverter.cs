@@ -10,7 +10,6 @@ public static class DtoConverter<T, U>
     });
     private static Mapper mapper = new(config);
 
-
     //Mathod for mapping a single model object to DTO and viceversa
     // T - original object type
     // U - target object type
