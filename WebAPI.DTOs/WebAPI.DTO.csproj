@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
 
 	<MinVerTagPrefix>v</MinVerTagPrefix>
-	<MinVerDefaultPreReleaseIdentifiers>beta.0</MinVerDefaultPreReleaseIdentifiers>
+	<MinVerIgnoreHeight>true</MinVerIgnoreHeight>
 
   </PropertyGroup>
 
