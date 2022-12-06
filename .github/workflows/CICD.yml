@@ -4,21 +4,44 @@ on:
   push:
     branches: [ main ]
   workflow_dispatch:
-  
+
 jobs:
-  build:
+  Build:
     runs-on: windows-latest
+    environment: 
+      name: Development
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-    - name: Install .NET 7.0
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '7.x.x'
-    - name: Build, Tests, Cover, Pack and Publish (on push tag)
-      shell: bash
-      run: |
-        dotnet tool install --global dotnet-releaser
-        dotnet-releaser run --github-token "${{secrets.GITHUB_TOKEN}}" src/dotnet-releaser.toml
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install .NET 7.0
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.x.x'
+      - name: Build
+        shell: bash
+        run: |
+          dotnet tool install --global dotnet-releaser
+          dotnet-releaser build --github-token "${{secrets.GITHUB_TOKEN}}" src/dotnet-releaser-build.toml
+  DeployDev:
+    runs-on: windows-latest
+    environment: 
+      name: Development
+    needs: [Build]
+    steps:
+      - name: Test
+        shell: bash
+        run: |
+          dotnet-releaser run --github-token "${{secrets.GITHUB_TOKEN}}" src/dotnet-releaser-test.toml
+  DeployProd:
+    name: Deploy to Production 
+    needs: [DeployDev]
+    runs-on: windows-latest
+    environment: 
+      name: Production
+    steps:
+      - name: Release
+        shell: bash
+        run: |
+          dotnet-releaser run --github-token "${{secrets.GITHUB_TOKEN}}" src/dotnet-releaser-release.toml

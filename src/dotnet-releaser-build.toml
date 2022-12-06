@@ -1,0 +1,30 @@
+[msbuild]
+project = "../test-api.sln"
+[github]
+user = "diversiwaver"
+repo = "test-repo"
+[nuget]
+publish = false
+[test]
+enable = false
+[coverage]
+enable = false
+[[pack]]
+publish = false
+rid = ["win-x64", "win-arm", "win-arm64"]
+kinds = ["zip"]
+
+[[pack]]
+publish = false
+rid = ["linux-x64", "linux-arm", "linux-arm64"]
+kinds = ["deb", "tar"]
+
+[[pack]]
+publish = false
+rid = ["rhel-x64"]
+kinds = ["rpm", "tar"]
+
+[[pack]]
+publish = false
+rid = ["osx-x64", "osx-arm64"]
+kinds = ["tar"]
