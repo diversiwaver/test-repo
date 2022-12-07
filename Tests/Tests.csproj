@@ -5,7 +5,8 @@
     <Nullable>enable</Nullable>
     
     <IsPackable>false</IsPackable>
-
+	<MinVerIgnoreHeight>true</MinVerIgnoreHeight>
+	<MinVerTagPrefix>v</MinVerTagPrefix>
   </PropertyGroup>
 
   <ItemGroup>
