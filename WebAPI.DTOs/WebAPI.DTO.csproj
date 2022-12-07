@@ -4,16 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <MinVerDefaultPreReleaseIdentifiers>beta.0</MinVerDefaultPreReleaseIdentifiers>
-	<MinVerIgnoreHeight>true</MinVerIgnoreHeight>
-    <MinVerTagPrefix>v</MinVerTagPrefix>
+	<Version>1.0.5</Version>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MinVer" Version="4.2.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
 
 </Project>
