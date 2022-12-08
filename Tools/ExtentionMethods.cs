@@ -1,12 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 namespace Tools
 {
 	public class ExtentionMethods
 	{
-		public ExtentionMethods()
-		{
-		}
+		public ExtentionMethods() { }
 	}
 
     /**
