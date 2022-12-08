@@ -1,6 +1,12 @@
+<<<<<<< Updated upstream
 ﻿using System;
 
 namespace WebAPI.DTOs
+=======
+﻿namespace WebAPI.DTOs;
+
+public class EmployeeDto
+>>>>>>> Stashed changes
 {
 	public class EmployeeDto
 	{
