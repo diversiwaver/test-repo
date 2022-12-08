@@ -3,6 +3,7 @@ project = "../test-api.sln"
 [github]
 user = "diversiwaver"
 repo = "test-repo"
+
 [nuget]
 publish = false
 [changelog]
