@@ -1,12 +1,7 @@
-﻿using System;
-
-namespace Tools
+﻿namespace Tools;
+public static class Constants
 {
-	public static class Constants
-	{
-		public const int MinimumAge = 18;
-		public const int MaximumAge = 125;
-
-	}
+	public const int MinimumAge = 18;
+	public const int MaximumAge = 125;
 }
 
