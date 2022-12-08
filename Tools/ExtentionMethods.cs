@@ -3,9 +3,7 @@ namespace Tools
 {
 	public class ExtentionMethods
 	{
-		public ExtentionMethods()
-		{
-		}
+		public ExtentionMethods() { }
 	}
 
     /**
