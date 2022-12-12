@@ -10,3 +10,18 @@ enable = false
 [nuget]
 publish = true
 source = "https://nuget.pkg.github.com/diversiwaver/index.json"
+
+[[pack]]
+publish = false
+rid = ["linux-x64", "linux-arm", "linux-arm64"]
+kinds = ["deb", "tar"]
+
+[[pack]]
+publish = false
+rid = ["rhel-x64"]
+kinds = ["rpm", "tar"]
+
+[[pack]]
+publish = false
+rid = ["osx-x64", "osx-arm64"]
+kinds = ["tar"]
