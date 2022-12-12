@@ -63,4 +63,6 @@ jobs:
         run: |
           dotnet tool install --global dotnet-releaser
           dotnet-releaser run --github-token "${{secrets.GITHUB_TOKEN}}" src/dotnet-releaser-release.toml
-          dotnet-releaser publish --github-token "${{secrets.GITHUB_TOKEN}}" --nuget-token "${{secrets.NUGET_TOKEN}}" src/dotnet-releaser-nuget.toml
+          TAG=$(git describe --tags)
+          dotnet pack test-repo/WebApi.DTOs --version $TAG
+          dotnet publish test-repo/WebApi.DTOs/bin/Release/WebApi.DTOs.$TAG.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://nuget.pkg.github.com/OWNER/index.json
