@@ -63,6 +63,25 @@ jobs:
         run: |
           dotnet tool install --global dotnet-releaser
           dotnet-releaser run --github-token "${{secrets.GITHUB_TOKEN}}" src/dotnet-releaser-release.toml
-          TAG=$(git describe --tags)
+          #TAG=$(git describe --tags)
+          #dotnet pack test-repo/WebApi.DTOs --version $TAG
+          #dotnet publish test-repo/WebApi.DTOs/bin/Release/WebApi.DTOs.$TAG.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://nuget.pkg.github.com/OWNER/index.json
+
+          TAG=$(git describe --tags || echo "0.0.0")
           dotnet pack test-repo/WebApi.DTOs --version $TAG
-          dotnet publish test-repo/WebApi.DTOs/bin/Release/WebApi.DTOs.$TAG.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://nuget.pkg.github.com/OWNER/index.json
+          PACKAGES=$(dotnet nuget list -p test-repo/WebApi.DTOs/bin/Release -k ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/OWNER/index.json -o packages WebApi.DTOs)
+
+
+          #If no Nuget packages are found, use the default version number "0.0.0"
+          if [ -z "$PACKAGES" ]; then
+            VERSION="0.0.0"
+          else
+            # Otherwise, get the latest version number from the list of Nuget packages
+            VERSION=$(echo "$PACKAGES" | head -n 1 | awk '{print $1}')
+          fi
+
+          # Increment the version number of the Nuget package
+          dotnet increment-version --version $VERSION test-repo/WebApi.DTOs/bin/Release/WebApi.DTOs.$TAG.nupkg
+
+          # Publish the Nuget package to GitHub Packages
+          dotnet publish test-repo/WebApi.DTOs/bin/Release/WebApi.DTOs.$TAG.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/OWNER/index.json
