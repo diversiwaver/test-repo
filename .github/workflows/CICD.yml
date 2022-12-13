@@ -8,7 +8,6 @@ on:
 jobs:
   DeployProd:
     name: Deploy to Production 
-    needs: [DeployDev]
     runs-on: windows-latest
     environment: 
       name: Production
@@ -42,6 +41,7 @@ jobs:
           #dotnet publish .nuget/WebApi.DTO.$new_version.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://nuget.pkg.github.com/diversiwaver/index.json
   Build:
     runs-on: windows-latest
+    needs: [DeployProd]
     environment: 
       name: Development
     steps:
