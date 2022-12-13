@@ -15,4 +15,5 @@ public class OfficeDto
 	public string LastName { get; set; }
 
 	public uint MaxOccupancy { get; set; }
+	
 }
