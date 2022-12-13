@@ -16,4 +16,5 @@ public class OfficeDto
 
 	public uint MaxOccupancy { get; set; }
 }
+ 
 
