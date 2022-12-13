@@ -24,15 +24,13 @@ jobs:
         run: |
           versions=$(dotnet nuget list WebAPI.DTOs -k ${{ secrets.NUGET_TOKEN }} -s https://nuget.pkg.github.com/diversifier/index.json)
           echo versions
-          if ( ! "${{ steps.version.output }}" -match '^[0-9]+\.[0-9]+\.[0-9]+$' )
-          {
+           if [[ ! "${{ steps.version.output }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             version="${BASH_REMATCH[1]}"
-          }
+            echo version
           else
-          {
             echo "Error: version number does not follow semantic versioning format X.Y.Z"
             exit 1
-          }  
+          fi
         id: version
       - name: Release
         shell: bash
