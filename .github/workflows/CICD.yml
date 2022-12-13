@@ -25,6 +25,7 @@ jobs:
           dotnet tool install --global dotnet-releaser
           dotnet-releaser build --github-token "${{secrets.GITHUB_TOKEN}}" src/dotnet-releaser-build.toml
   DeployDev:
+    name: Deploy to Development 
     runs-on: windows-latest
     environment: 
       name: Development
@@ -58,7 +59,7 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '7.x.x'
-      - name: Release
+      - name: Release & Publish Nuget Packages
         shell: bash
         run: |
           dotnet tool install --global dotnet-releaser
