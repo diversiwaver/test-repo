@@ -22,12 +22,12 @@ jobs:
           dotnet-version: '7.x.x'
       - name: Get latest version of NuGet package
         run: |
-          echo secrets.NUGET_TOKEN
+          echo ${{ secrets.NUGET_TOKEN }}
           versions=$(dotnet nuget list WebAPI.DTOs -k ${{ secrets.NUGET_TOKEN }} -s https://nuget.pkg.github.com/diversiwaver/index.json)
-          echo versions
+          echo  ${{ versions }}
            if [[ ! "${{ steps.version.output }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             version="${BASH_REMATCH[1]}"
-            echo version
+            echo ${{ version }}
           else
             echo "Error: version number does not follow semantic versioning format X.Y.Z"
             exit 1
