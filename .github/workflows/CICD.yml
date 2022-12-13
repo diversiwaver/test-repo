@@ -25,7 +25,7 @@ jobs:
           dotnet tool install --global dotnet-releaser
           dotnet-releaser build --github-token "${{secrets.GITHUB_TOKEN}}" src/dotnet-releaser-build.toml
           #dotnet pack -o nuget --version $new_version --no-build
-          dotnet pack -o nuget/ --no-build /p:Version= $new_version
+          #dotnet pack -o nuget/ --no-build /p:Version= $new_version
           #dotnet publish WebApi.DTOs/bin/Release/WebApi.DTOs.$new_version.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://nuget.pkg.github.com/diversiwaver/index.json
   DeployDev:
     runs-on: windows-latest
@@ -78,5 +78,5 @@ jobs:
           dotnet-releaser run --github-token "${{secrets.GITHUB_TOKEN}}" src/dotnet-releaser-release.toml
           new_version=${{ steps.version.output }}
           
-          dotnet pack -o .nuget/ --no-build /p:Version= $new_version
+          dotnet pack -o .nuget/ --no-build --version= $new_version
           #dotnet publish .nuget/WebApi.DTO.$new_version.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://nuget.pkg.github.com/diversiwaver/index.json
