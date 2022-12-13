@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
 	<MinVerIgnoreHeight>true</MinVerIgnoreHeight>
 	<MinVerTagPrefix>v</MinVerTagPrefix>
+  	<IsPackable>False</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
