@@ -1,35 +1,13 @@
 name: CICD
+
 on:
   push:
     branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  DeployProd:
-    name: Deploy to Production 
-    runs-on: ubuntu-latest
-    environment: 
-      name: Production
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Install .NET 7.0
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '7.x.x'
-      - name: Release
-        shell: bash
-        run: |
-          dotnet tool install --global dotnet-releaser
-          dotnet-releaser run --github-token "${{secrets.GITHUB_TOKEN}}" src/dotnet-releaser-release.toml
-          new_version="1.1.8"
-          dotnet pack -o .nuget/ --no-build --version 1.1.8
-          #dotnet publish .nuget/WebApi.DTO.$new_version.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://nuget.pkg.github.com/diversiwaver/index.json
   Build:
     runs-on: windows-latest
-    needs: [DeployProd]
     environment: 
       name: Development
     steps:
@@ -46,9 +24,6 @@ jobs:
         run: |
           dotnet tool install --global dotnet-releaser
           dotnet-releaser build --github-token "${{secrets.GITHUB_TOKEN}}" src/dotnet-releaser-build.toml
-          #dotnet pack -o nuget --version $new_version --no-build
-          #dotnet pack -o nuget/ --no-build /p:Version= $new_version
-          #dotnet publish WebApi.DTOs/bin/Release/WebApi.DTOs.$new_version.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://nuget.pkg.github.com/diversiwaver/index.json
   DeployDev:
     runs-on: windows-latest
     environment: 
@@ -68,4 +43,23 @@ jobs:
         run: |
           dotnet tool install --global dotnet-releaser
           dotnet-releaser run --github-token "${{secrets.GITHUB_TOKEN}}" src/dotnet-releaser-test.toml
- 
+  DeployProd:
+    name: Deploy to Production 
+    needs: [DeployDev]
+    runs-on: windows-latest
+    environment: 
+      name: Production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install .NET 7.0
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.x.x'
+      - name: Release
+        shell: bash
+        run: |
+          dotnet tool install --global dotnet-releaser
+          dotnet-releaser publish --github-token "${{secrets.GITHUB_TOKEN}}" --nuget-token "${{secrets.NUGET_TOKEN}}" src/dotnet-releaser-release.toml
