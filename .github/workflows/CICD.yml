@@ -22,7 +22,8 @@ jobs:
           dotnet-version: '7.x.x'
       - name: Get latest version of NuGet package
         run: |
-          versions=$(dotnet nuget list WebAPI.DTOs -k ${{ secrets.NUGET_TOKEN }} -s https://nuget.pkg.github.com/diversifier/index.json)
+          echo secrents.NUGET_TOKEN
+          versions=$(dotnet nuget list WebAPI.DTOs -k ${{ secrets.NUGET_TOKEN }} -s https://nuget.pkg.github.com/diversiwaver/index.json)
           echo versions
            if [[ ! "${{ steps.version.output }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             version="${BASH_REMATCH[1]}"
