@@ -27,7 +27,7 @@ jobs:
           #new_version=$(echo "${{ github.ref }}" | sed -E 's/refs\/tags\/v([0-9]+\.[0-9]+\.[0-9]+)/\1/')
           #dotnet pack WebAPI.DTOs/WebApi.DTO.csproj -o nuget --version $new_version --no-build
           #dotnet publish WebApi.DTOs/bin/Release/WebApi.DTOs.$new_version.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://nuget.pkg.github.com/diversiwaver/index.json
-  Nuget-Package:
+  publish:
     name: build, pack & publish
     runs-on: windows-latest
     steps:
