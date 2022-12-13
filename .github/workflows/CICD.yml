@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
- DeployProd:
+  DeployProd:
     name: Deploy to Production 
     needs: [DeployDev]
     runs-on: windows-latest
@@ -38,11 +38,8 @@ jobs:
           dotnet tool install --global dotnet-releaser
           dotnet-releaser run --github-token "${{secrets.GITHUB_TOKEN}}" src/dotnet-releaser-release.toml
           new_version=${{ steps.version.output }}
-          
           dotnet pack -o .nuget/ --no-build --version= $new_version
           #dotnet publish .nuget/WebApi.DTO.$new_version.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://nuget.pkg.github.com/diversiwaver/index.json
-
-
   Build:
     runs-on: windows-latest
     environment: 
