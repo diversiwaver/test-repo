@@ -24,8 +24,8 @@ jobs:
         run: |
           dotnet tool install --global dotnet-releaser
           dotnet-releaser run --github-token "${{secrets.GITHUB_TOKEN}}" src/dotnet-releaser-release.toml
-          new_version=${{ steps.version.output }}
-          dotnet pack -o .nuget/ --no-build --version "1.1.8"
+          new_version="1.1.8"
+          dotnet pack -o .nuget/ --no-build --version 1.1.8
           #dotnet publish .nuget/WebApi.DTO.$new_version.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://nuget.pkg.github.com/diversiwaver/index.json
   Build:
     runs-on: windows-latest
