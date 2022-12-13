@@ -6,6 +6,43 @@ on:
   workflow_dispatch:
 
 jobs:
+ DeployProd:
+    name: Deploy to Production 
+    needs: [DeployDev]
+    runs-on: windows-latest
+    environment: 
+      name: Production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install .NET 7.0
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.x.x'
+      - name: Get latest version of NuGet package
+        run: |
+          versions=$(dotnet nuget list WebAPI.DTOs -k ${{ secrets.NUGET_TOKEN }} -s https://nuget.pkg.github.com/diversifier/index.json)
+          echo versions
+          if [[ "$versions" =~ ([0-9]+\.[0-9]+\.[0-9]+) ]]; then
+            version="${BASH_REMATCH[1]}"
+          else
+            echo "Error: could not determine latest version of WebAPI.DTO"
+            exit 1
+            fi  
+        id: version
+      - name: Release
+        shell: bash
+        run: |
+          dotnet tool install --global dotnet-releaser
+          dotnet-releaser run --github-token "${{secrets.GITHUB_TOKEN}}" src/dotnet-releaser-release.toml
+          new_version=${{ steps.version.output }}
+          
+          dotnet pack -o .nuget/ --no-build --version= $new_version
+          #dotnet publish .nuget/WebApi.DTO.$new_version.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://nuget.pkg.github.com/diversiwaver/index.json
+
+
   Build:
     runs-on: windows-latest
     environment: 
@@ -46,37 +83,4 @@ jobs:
         run: |
           dotnet tool install --global dotnet-releaser
           dotnet-releaser run --github-token "${{secrets.GITHUB_TOKEN}}" src/dotnet-releaser-test.toml
-  DeployProd:
-    name: Deploy to Production 
-    needs: [DeployDev]
-    runs-on: windows-latest
-    environment: 
-      name: Production
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Install .NET 7.0
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '7.x.x'
-      - name: Get latest version of NuGet package
-        run: |
-          versions=$(dotnet nuget list WebAPI.DTOs -k ${{ secrets.NUGET_TOKEN }} -s https://nuget.pkg.github.com/diversifier/index.json)
-          if [[ "$versions" =~ ([0-9]+\.[0-9]+\.[0-9]+) ]]; then
-            version="${BASH_REMATCH[1]}"
-          else
-            echo "Error: could not determine latest version of WebAPI.DTO"
-            exit 1
-            fi  
-        id: version
-      - name: Release
-        shell: bash
-        run: |
-          dotnet tool install --global dotnet-releaser
-          dotnet-releaser run --github-token "${{secrets.GITHUB_TOKEN}}" src/dotnet-releaser-release.toml
-          new_version=${{ steps.version.output }}
-          
-          dotnet pack -o .nuget/ --no-build --version= $new_version
-          #dotnet publish .nuget/WebApi.DTO.$new_version.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://nuget.pkg.github.com/diversiwaver/index.json
+ 
